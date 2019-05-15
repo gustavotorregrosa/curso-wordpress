@@ -48,15 +48,26 @@ function universitySearchResults($data){
 
         if(get_post_type() == 'program'){
             $results['programs'][] = [
+                'id' => get_the_id(),
                 'title' => get_the_title(),
                 'permalink' => get_the_permalink()
             ];
         }
 
         if(get_post_type() == 'event'){
+            $eventDate = new DateTime(get_field('event_date'));
+            $description = null;
+            if (has_excerpt()) {
+                $description = get_the_excerpt();
+            } else {
+                $description = wp_trim_words(get_the_content(), 10);
+            }
             $results['events'][] = [
                 'title' => get_the_title(),
-                'permalink' => get_the_permalink()
+                'permalink' => get_the_permalink(),
+                'month' => $eventDate->format('M'),
+                'day' => $eventDate->format('d'),
+                'description' => $description
             ];
         }
 
@@ -69,6 +80,40 @@ function universitySearchResults($data){
 
     }
 
+    // $results['professors'][] = '1234';
+
     // return $professors->posts;
+
+
+
+    $programRelationshipQuery = new WP_Query([
+        'post_type' => 'professor',
+        'meta_query' => [
+            [
+                'key' => 'related_programs',
+                'compare' => 'LIKE',
+                'value' => '"'.$results['programs'][0]['id'].'"'
+            ]
+        ]
+    ]);
+
+        
+
+    while($programRelationshipQuery->have_posts()){
+        $programRelationshipQuery->the_post();
+
+        if(get_post_type() == 'professor'){
+            $results['professors'][] = [
+                'title' => get_the_title(),
+                'permalink' => get_the_permalink(),
+                'image' => get_the_post_thumbnail_url(0, 'professorLandscape')
+            ];
+        }
+
+
+    }
+
+    $results['professors'] = array_values(array_unique( $results['professors'], SORT_REGULAR));
+
     return $results;
 }

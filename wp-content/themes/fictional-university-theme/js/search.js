@@ -56,9 +56,6 @@ class Search {
                             `).join('')}
                         ${results.professors.length ? '</ul>' : ''}
 
-
-
-
                     </div>
                     <div class="one-third">
                         <h2 class="search-overlay__section-title">Campi</h2>
@@ -66,13 +63,38 @@ class Search {
                              ${results.campi.map(item => `<li><a href="${item.permalink}">${item.title}</a></li>`).join('')}
                         ${results.campi.length ? '</ul>' : ''}
                         <h2 class="search-overlay__section-title">Events</h2>
+                        ${results.events.length ? " " : '<p>Nenhum resultado encontrado</p>'}
+                            ${results.events.map(item => `
+
+
+                            <div class="event-summary">
+                                <a class="event-summary__date t-center" href="${item.permalink}">
+                                    <span class="event-summary__month">${item.month}</span>
+                                    <span class="event-summary__day">
+
+                                    ${item.day}
+
+                                    </span>
+                                </a>
+                                <div class="event-summary__content">
+                                    <h5 class="event-summary__title headline headline--tiny"><a href="${item.permalink}">${item.title}</a></h5>
+                                    <p>
+                                ${item.description}
+
+                                    <a href="${item.permalink}" class="nu gray">Learn more</a></p>
+                                </div>
+                                </div>
+                                                            
+                            
+                            `).join('')}
+                      
                     </div>
                 </div>
             
             `);
             this.isSpinnerVisible = false;
         });
-        
+
 
 
 
@@ -84,13 +106,13 @@ class Search {
         //     var combinedResults = posts[0].concat(pages[0]);
 
         //     this.resultsDiv.html(`
-        
+
         //     <h2 class="search-overlay__section-title">General Info</h2>
         //     ${combinedResults.length ? ' <ul class="link-list min=list">' : '<p>Nenhum resultado encontrado</p>'}
         //         ${combinedResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a> ${item.type == 'post' ? `by ${item.authorName}` : ''} </li>`).join('')}
         //     ${combinedResults.length ? '</ul>' : ''}
-            
-        
+
+
         //     `);
         //     this.isSpinnerVisible = false;
         // }, () => {
@@ -164,23 +186,23 @@ class Search {
     addSearchHTML() {
         $("body").append(`
         
-<div class="search-overlay">
-<div class="search-overlay__top">
-  <div class="container">
-    <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
-    <input type="text" class="search-term" placeholder="what are you looking for?" id="search-term">
-    <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
-  </div>
-</div>
+                <div class="search-overlay">
+                <div class="search-overlay__top">
+                <div class="container">
+                    <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+                    <input type="text" class="search-term" placeholder="what are you looking for?" id="search-term">
+                    <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+                </div>
+                </div>
 
-<div class="container">
-  <div id="search-overlay__results">
+                <div class="container">
+                <div id="search-overlay__results">
 
-  
-  </div>
-</div>
+                
+                </div>
+                </div>
 
-</div>
+                </div>
 
         
         `);

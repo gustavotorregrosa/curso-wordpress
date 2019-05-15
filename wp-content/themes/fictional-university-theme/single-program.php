@@ -40,6 +40,7 @@ while (have_posts()) {
       ]
     ]);
 
+         
     ?>
 
     <?php if($relatedProfessors->have_posts()) { ?>
@@ -72,16 +73,6 @@ while (have_posts()) {
 
 
     <?php wp_reset_postdata() ?>
-
-
-
-
-
-
-
-
-
-
 
 
 
