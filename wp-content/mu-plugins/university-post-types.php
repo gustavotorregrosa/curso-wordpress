@@ -3,6 +3,8 @@
 function university_post_types(){
 
     register_post_type('campus', [
+        'capability_type' => 'campus',
+        'map_meta_cap' => true,
         'supports' => [
             'title',
             'editor',
@@ -47,6 +49,8 @@ function university_post_types(){
 
 
     register_post_type('event', [
+        'capability_type' => 'event',
+        'map_meta_cap' => true,
         'supports' => [
             'title',
             'editor',
@@ -71,7 +75,7 @@ function university_post_types(){
     register_post_type('program', [
         'supports' => [
             'title',
-            'editor'
+            // 'editor'
         ],
         'rewrite' => [
             'slug' => 'programs'

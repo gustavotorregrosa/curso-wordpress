@@ -174,6 +174,7 @@ class Search {
         setTimeout(function () {
             this.searchField.focus();
         }.bind(this), 400);
+        return false;
 
     }
 

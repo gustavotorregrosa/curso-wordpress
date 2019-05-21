@@ -15,7 +15,7 @@ while (have_posts()) {
       <p><a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('program'); ?>"><i class="fa fa-home" aria-hidden="true"></i>Todos os programas</a> <span class="metabox__main"><?php the_title() ?></span></p>
     </div>
     <div class="generic-content">
-      <?php the_content() ?>
+      <?php the_field('main_body_content') ?>
 
 
 
