@@ -92,6 +92,31 @@ function university_post_types(){
         'menu_icon' => 'dashicons-awards'
     ]);
     
+
+
+    register_post_type('note', [
+        'show_in_rest' => true,
+        'supports' => [
+            'title',
+            'editor'
+        ],
+  
+        'public' => false,
+        'show_ui' => true,
+        'labels' => [
+            'name' => 'Notas',
+            'add_new_item' => 'Adicionar nota',
+            'edit_item' => 'Editar nota',
+            'all_items' => 'Todos as notas',
+            'singular_name' => 'Nota'
+        ],
+        'menu_icon' => 'dashicons-welcome-write-blog'
+    ]);
+
+
 }
 
 add_action('init', 'university_post_types');
+
+
+
