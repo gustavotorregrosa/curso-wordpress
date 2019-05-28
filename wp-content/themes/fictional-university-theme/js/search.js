@@ -19,7 +19,7 @@ class Search {
     events() {
         this.openButton.on("click", this.openOverlay.bind(this));
         this.closeButton.on("click", this.closeOverlay.bind(this));
-        $(document).on("keyup", this.keyPressDispatcher.bind(this));
+        // $(document).on("keyup", this.keyPressDispatcher.bind(this));
         this.searchField.on("keyup", this.typingLogic.bind(this));
 
     }
@@ -137,7 +137,7 @@ class Search {
             clearTimeout(this.typingTimer);
             if (this.searchField.val() != "") {
                 if (!this.isSpinnerVisible) {
-                    this.resultsDiv.html('<div class="spinner-loader"></div>');
+                    this.resultsDiv.html('<div spinner-loader"></div>');
                     this.isSpinnerVisible = true;
                 }
 
@@ -154,16 +154,16 @@ class Search {
 
     }
 
-    keyPressDispatcher(e) {
-        // console.log(e.keyCode);
-        if (e.keyCode == 83 && !this.isAberto) {
-            this.openOverlay();
-        }
-        if (e.keyCode == 27 && this.isAberto) {
-            this.closeOverlay();
-        }
+    // keyPressDispatcher(e) {
+    //     // console.log(e.keyCode);
+    //     if (e.keyCode == 83 && !this.isAberto) {
+    //         this.openOverlay();
+    //     }
+    //     if (e.keyCode == 27 && this.isAberto) {
+    //         this.closeOverlay();
+    //     }
 
-    }
+    // }
 
     openOverlay() {
         this.searchOverlay.addClass("search-overlay--active");

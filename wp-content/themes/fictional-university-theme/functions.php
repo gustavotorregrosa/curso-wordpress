@@ -1,11 +1,19 @@
 <?php
 
 require get_theme_file_path('/inc/search-route.php');
+require get_theme_file_path('/inc/like-route.php');
+
 
 function university_custom_rest(){
     register_rest_field('post', 'authorName',  [
         'get_callback' => function(){
             return get_the_author();
+        }
+    ]);
+
+    register_rest_field('note', 'userNoteCount',  [
+        'get_callback' => function(){
+            return count_user_posts(get_current_user_id(), 'note');
         }
     ]);
 }
@@ -58,6 +66,7 @@ function university_files()
     wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), null, microtime(), true);
     wp_enqueue_script('search-university-js', get_theme_file_uri('/js/search.js'), null, microtime(), true);    
     wp_enqueue_script('notes-js', get_theme_file_uri('/js/my-notes.js'), null, microtime(), true);
+    wp_enqueue_script('like-js', get_theme_file_uri('/js/like.js'), null, microtime(), true);
     wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
     wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('university_main_styles', get_stylesheet_uri(), null, microtime());
@@ -167,3 +176,24 @@ add_filter('login_headertitle', 'ourLoginTitle');
 function ourLoginTitle(){
     return get_bloginfo('name');
 }
+
+add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
+
+function makeNotePrivate($data, $postarr){
+    if($data['post_type'] == 'note'){
+        if(count_user_posts(get_current_user_id(), 'note') > 4 and !$postarr['ID']){
+            die("you have reached your note limit");
+        }
+
+        $data['post_content'] = sanitize_textarea_field($data['post_content']);
+        $data['post_title'] = sanitize_text_field($data['post_title']);
+    }
+
+    if($data['post_type'] == 'note' and  $data['post_status'] != 'trash'){
+        $data['post_status'] = "private";
+    }
+
+    
+    return $data;
+}
+
